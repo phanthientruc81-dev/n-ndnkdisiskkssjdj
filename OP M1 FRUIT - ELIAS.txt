@@ -1,0 +1,113 @@
+repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Setting = {
+    ["Hitbox"] = {
+        ["Enabled"] = true,
+        ["Size"] = 25,
+        ["Transparency"] = 0.8,
+    },
+    ["Team"] = "Pirate", -- "Marine"
+    ["Method Click"] = {["Click Gun"] = false ,["Click Melee"] = false,["Click Sword"] = false,["Click Fruit"] = true, ["LowHealth"] = 0, ["Delay Click"] = 0},
+    ["Race V4"] = {["Enable"] = true},
+    ["Webhook"] = {["Enabled"] = true,["Url Webhook"] = ""},
+    
+    ["Misc"] = {["AutoBuyRandomandStoreFruit"] = false,["AutoBuySurprise"] = false},
+    ["SafeZone"] = {["Enable"] = true,["LowHealth"] = 5000,["MaxHealth"] = 7000,["Teleport Y"] = 4500},
+    ["Method Use Skill"] = {["Use Random"] = true,["Use Number"] = false},
+    ["Use random skill if player target low health"] = {
+        ["Enabled"] = true,
+        ["Low Health"] = 5000,
+    },
+    ["Use Portal Teleport"] = false,
+    ["Target Time"] = 20, 
+    ["Aim Prediction"] = 1,
+    ["Select Region"] = {["Enabled"] = true,["Region"] = {["Singapore"] = true,["United States"] = false,["Netherlands"] = false,["Germany"] =false,["India"] = false,["Australia"] = false}},
+    ["Ignore Devil Fruit"] = {"Portal-Portal"}, 
+    ["Dodge Skill Player"] = true,
+    ["Spam Dash"] = false,
+    ["Equip Weapon"] = {
+        ["Enabled"] = false,
+        ["Melee"] = {["Enabled"] = false,["Name Weapon"] = ""},
+        ["Sword"] = {["Enabled"] = false,["Name Weapon"] = ""},
+        ["Gun"] = {["Enabled"] = false,["Name Weapon"] = ""},
+    },
+    ["Weapons"] = {
+        ["Melee"] = {
+            ["Enable"] = false,
+            ["Skills"] = {
+                ["Z"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 2},
+                ["X"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 3},
+                ["C"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 5},
+            },
+        },
+        ["Blox Fruit"] = {
+            ["Enable"] =false,
+            ["Skills"] = {
+                ["Z"] = {["Enable"] = false,["HoldTime"] = 0.3,["Number"] = 4},
+                ["X"] = {["Enable"] = true,["HoldTime"] = 0,["Number"] = 6},
+                ["C"] = {["Enable"] = false,["HoldTime"] = 0.3,["Number"] = 9},
+                ["V"] = {["Enable"] = false,["HoldTime"] = 0.3,["Number"] = 0},
+                ["F"] = {["Enable"] = false,["HoldTime"] = 0.3,["Number"] = 8},
+            },
+        },
+        ["Gun"] = {
+            ["Enable"] = false,
+            ["Skills"] = {
+                ["Z"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 1},
+                ["X"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 7},
+            },
+        },
+        ["Sword"] = {
+            ["Enable"] = false,
+            ["Skills"] = {
+                ["Z"] = {["Enable"] = true,["HoldTime"] = 1.5,["Number"] = 0},
+                ["X"] = {["Enable"] = true,["HoldTime"] = 0.5,["Number"] = 0},
+            },
+        },
+    }
+}
+
+task.spawn(function()
+    while task.wait(0.5) do
+        if getgenv().Setting["Hitbox"].Enabled then
+            local s = getgenv().Setting["Hitbox"].Size
+            local t = getgenv().Setting["Hitbox"].Transparency
+            pcall(function()
+                for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild("HumanoidRootPart") then
+                        v.HumanoidRootPart.Size = Vector3.new(s, s, s)
+                        v.HumanoidRootPart.Transparency = t
+                        v.HumanoidRootPart.CanCollide = false
+                    end
+                end
+                for _, p in pairs(game.Players:GetPlayers()) do
+                    if p ~= game.Players.LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                        p.Character.HumanoidRootPart.Size = Vector3.new(s, s, s)
+                        p.Character.HumanoidRootPart.Transparency = t
+                        p.Character.HumanoidRootPart.CanCollide = false
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+
+spawn(function()
+    local lp = game.Players.LocalPlayer
+    local rs = game:GetService("RunService")
+    
+    rs.RenderStepped:Connect(function()
+        local char = lp.Character
+        local root = char and char:FindFirstChild("HumanoidRootPart")
+        
+        if root then
+            local cam = workspace.CurrentCamera
+            local goal = CFrame.new(root.Position + Vector3.new(0, 4.5, 0)) * root.CFrame.Rotation * CFrame.new(0, 10, 30)
+            cam.CFrame = cam.CFrame:Lerp(goal, 0.4)
+        end
+    end)
+end)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/phanthientruc81-dev/redz_hup.endgvng/refs/heads/main/redz-hup.lua"))()
+wait(2)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiHub111/.lua/refs/heads/main/moudlefastattack"))() 
+
