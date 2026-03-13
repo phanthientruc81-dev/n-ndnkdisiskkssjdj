@@ -1,4 +1,5 @@
-repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
+Repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
+
 getgenv().Setting = {
     ["Hitbox"] = {
         ["Enabled"] = true,
@@ -22,7 +23,7 @@ getgenv().Setting = {
     ["Aim Prediction"] = 1,
     ["Select Region"] = {["Enabled"] = true,["Region"] = {["Singapore"] = true,["United States"] = false,["Netherlands"] = false,["Germany"] =false,["India"] = false,["Australia"] = false}},
     ["Ignore Devil Fruit"] = {"Portal-Portal"}, 
-    ["Dodge Skill Player"] = true,
+    ["Dodge Skill Player"] = false,
     ["Spam Dash"] = false,
     ["Equip Weapon"] = {
         ["Enabled"] = false,
@@ -66,6 +67,7 @@ getgenv().Setting = {
     }
 }
 
+-- Phần giữ nguyên tính năng Hitbox
 task.spawn(function()
     while task.wait(0.5) do
         if getgenv().Setting["Hitbox"].Enabled then
@@ -91,23 +93,8 @@ task.spawn(function()
     end
 end)
 
+-- Đã xóa đoạn spawn Camera bám theo ở đây --
 
-spawn(function()
-    local lp = game.Players.LocalPlayer
-    local rs = game:GetService("RunService")
-    
-    rs.RenderStepped:Connect(function()
-        local char = lp.Character
-        local root = char and char:FindFirstChild("HumanoidRootPart")
-        
-        if root then
-            local cam = workspace.CurrentCamera
-            local goal = CFrame.new(root.Position + Vector3.new(0, 4.5, 0)) * root.CFrame.Rotation * CFrame.new(0, 10, 30)
-            cam.CFrame = cam.CFrame:Lerp(goal, 0.4)
-        end
-    end)
-end)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/phanthientruc81-dev/redz_hup.endgvng/refs/heads/main/redz-hup.lua"))()
+loadstring(game:HttpGet("https://github.com/phanthientruc81-dev/sucvatdumankdclm/blob/main/redz-hup.lua"))()
 wait(2)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiHub111/.lua/refs/heads/main/moudlefastattack"))() 
-
